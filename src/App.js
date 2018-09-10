@@ -37,6 +37,7 @@ class App extends Component {
         <ReactTextareaAutocomplete
           className="my-textarea"
           loadingComponent={Loading}
+          movePopupAsYouType={true}
           style={{
             marginTop: 50,
             fontSize: "18px",
