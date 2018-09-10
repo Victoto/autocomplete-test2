@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
 
-import data from './data.json'
+import data from "./data.json";
 import logo from "./rdf-logo.png";
 import "./App.css";
 import "@webscopeio/react-textarea-autocomplete/style.css";
@@ -17,15 +17,15 @@ class App extends Component {
   //   };
   // }
 
-/* 
+  /* 
   Every time the user types a trigger: the current text value will be sent to
   backend for autocompletion check
 */
   onChange = () => {
     const value = this.textarea.innerHTML;
-    console.log({value});
+    console.log({ value });
   };
-  
+
   render() {
     return (
       <div className="App">
@@ -33,14 +33,18 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>SQL Query AutoCompletion over RDF data</h2>
         </div>
-        
+
         <ReactTextareaAutocomplete
           className="my-textarea"
           loadingComponent={Loading}
           style={{
+            marginTop: 50,
             fontSize: "18px",
             lineHeight: "20px",
             padding: 5
+          }}
+          itemStyle={{
+            margin: 5
           }}
           ref={rta => {
             this.rta = rta;
@@ -59,14 +63,14 @@ class App extends Component {
             "?": {
               dataProvider: token => {
                 this.onChange();
-                const dataNamesList = data.map(data => data.name)
-                const results = dataNamesList.filter(name => name.includes(token))
-                return results
-                  .slice(0, 10)
-                  .map(name => ({ name }));
+                const dataNamesList = data.map(data => data.name);
+                const results = dataNamesList.filter(name =>
+                  name.includes(token)
+                );
+                return results.slice(0, 15).map(name => ({ name }));
               },
               component: Item,
-              output: (item, trigger) => item.name
+              output: (item, trigger) => `"` + item.name + `"`
             }
           }}
         />
