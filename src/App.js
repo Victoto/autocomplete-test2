@@ -1,21 +1,10 @@
 import React, { Component } from "react";
 import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
-import emoji from "@jukben/emoji-search";
 
+import data from './data.json'
 import logo from "./rdf-logo.png";
 import "./App.css";
 import "@webscopeio/react-textarea-autocomplete/style.css";
-
-
-const list = [
-  {name: 'Apple'},
-  {name: 'Ape'},
-  {name: 'Alias'},
-  {name: 'Green'},
-  {name: 'Love'},
-  {name: 'Best'},
-  {name: 'Poster'}
-]
 
 const Item = ({ entity: { name } }) => <div>{name}</div>;
 const Loading = ({ data }) => <div>Loading</div>;
@@ -70,11 +59,11 @@ class App extends Component {
             "?": {
               dataProvider: token => {
                 this.onChange();
-                const results = emoji(token).slice(0, 20);
-                console.log({results});
-                return list
+                const dataNamesList = data.map(data => data.name)
+                const results = dataNamesList.filter(name => name.includes(token))
+                return results
                   .slice(0, 10)
-                  .map(({ name }) => ({ name }));
+                  .map(name => ({ name }));
               },
               component: Item,
               output: (item, trigger) => item.name
